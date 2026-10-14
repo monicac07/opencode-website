@@ -1,0 +1,419 @@
+/* ==========================================================================
+   Monica Chen — portfolio
+   No frameworks, no webfonts, no external requests.
+   Mobile-first. Light by default, dark via [data-theme="dark"].
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design tokens (light)
+   -------------------------------------------------------------------------- */
+
+:root {
+  color-scheme: light;
+
+  --bg: #fbfaf8;
+  --surface: #ffffff;
+  --border: #e2ded6;
+  --text: #1a1a1a;
+  --text-muted: #56565a;
+  --accent: #1c5c86;
+  --badge-bg: #f2ede2;
+  --badge-text: #6a5320;
+  --focus: #1c5c86;
+
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    "Noto Sans", sans-serif;
+
+  /* Fluid type scale — no breakpoints needed for headings. */
+  --step-0: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --step-1: clamp(1.125rem, 1.07rem + 0.28vw, 1.3125rem);
+  --step-2: clamp(1.5rem, 1.33rem + 0.85vw, 2rem);
+  --step-3: clamp(2.125rem, 1.68rem + 2.2vw, 3.5rem);
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.75rem;
+  --space-4: 3rem;
+
+  --radius: 10px;
+  --measure: 66ch;
+}
+
+/* Dark palette. Applied when JS sets the attribute. */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #111214;
+  --surface: #181a1d;
+  --border: #2b2e33;
+  --text: #ececed;
+  --text-muted: #a3a6ab;
+  --accent: #82bae2;
+  --badge-bg: #2b2417;
+  --badge-text: #e2cd92;
+  --focus: #82bae2;
+}
+
+/*
+  No-JS fallback: when JavaScript is unavailable no data-theme attribute is ever
+  set, so the system preference drives the palette. `:not([data-theme])` means this
+  never competes with the explicit attribute above.
+*/
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+
+    --bg: #111214;
+    --surface: #181a1d;
+    --border: #2b2e33;
+    --text: #ececed;
+    --text-muted: #a3a6ab;
+    --accent: #82bae2;
+    --badge-bg: #2b2417;
+    --badge-text: #e2cd92;
+    --focus: #82bae2;
+  }
+
+  /* Keep the toggle icon consistent with the palette when JS is off. */
+  :root:not([data-theme]) .theme-toggle .icon-sun {
+    display: inline;
+  }
+
+  :root:not([data-theme]) .theme-toggle .icon-moon {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. Base
+   -------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+.shell {
+  width: min(100% - 2.5rem, 62rem);
+  margin-inline: auto;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+  margin: 0;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0 0 var(--space-2);
+  max-width: var(--measure);
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* Visible keyboard focus everywhere. Never removed. */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   3. Skip link — keyboard users land here first
+   -------------------------------------------------------------------------- */
+
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: var(--space-2);
+  z-index: 10;
+  transform: translateY(-150%);
+  padding: var(--space-1) var(--space-2);
+  background-color: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 120ms ease-out;
+}
+
+.skip-link:focus {
+  transform: translateY(var(--space-2));
+}
+
+/* --------------------------------------------------------------------------
+   4. Header + theme toggle
+   -------------------------------------------------------------------------- */
+
+.site-header {
+  padding-block: var(--space-4) var(--space-3);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.header-intro h1 {
+  font-size: var(--step-3);
+  letter-spacing: -0.02em;
+}
+
+.tagline {
+  margin: var(--space-1) 0 0;
+  font-size: var(--step-1);
+  color: var(--text-muted);
+  max-width: none;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 2.75rem; /* 44px — comfortable touch target */
+  max-width: 100%; /* never overflow the shell on narrow screens */
+  padding: var(--space-1) var(--space-2);
+  background-color: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font: inherit;
+  font-size: var(--step-0);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 120ms ease-out, background-color 120ms ease-out;
+}
+
+/*
+  The label is a flex item, so it wraps at the word boundary instead of
+  overflowing once the button hits max-width. Wrapping only adds height, so the
+  44px touch target is never lost.
+*/
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+}
+
+.theme-toggle .icon {
+  flex: none;
+  display: inline;
+}
+
+/* Default (light): show the moon, since clicking switches to dark. */
+.theme-toggle .icon-sun {
+  display: none;
+}
+
+[data-theme="dark"] .theme-toggle .icon-sun {
+  display: inline;
+}
+
+[data-theme="dark"] .theme-toggle .icon-moon {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   5. Sections
+   -------------------------------------------------------------------------- */
+
+.section {
+  padding-block: var(--space-4);
+}
+
+.section + .section {
+  border-top: 1px solid var(--border);
+}
+
+.section h2 {
+  font-size: var(--step-2);
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-3);
+}
+
+.notice {
+  padding: var(--space-2);
+  background-color: var(--badge-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: var(--step-0);
+}
+
+/* --------------------------------------------------------------------------
+   6. About — fact list
+   -------------------------------------------------------------------------- */
+
+.facts {
+  margin: var(--space-3) 0 0;
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--border);
+}
+
+.facts-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-1);
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--border);
+}
+
+@media (min-width: 34rem) {
+  .facts-row {
+    grid-template-columns: 9rem 1fr;
+    gap: var(--space-3);
+  }
+}
+
+.facts dt {
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.facts dd {
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   7. Projects
+   -------------------------------------------------------------------------- */
+
+.project-list {
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2);
+}
+
+@media (min-width: 48rem) {
+  .project-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.project-item {
+  display: flex;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: var(--space-3);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.badge {
+  align-self: flex-start;
+  margin: 0 0 var(--space-2);
+  padding: 0.15rem 0.55rem;
+  background-color: var(--badge-bg);
+  color: var(--badge-text);
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.project-title {
+  font-size: var(--step-1);
+  margin-bottom: var(--space-1);
+}
+
+.project-body {
+  color: var(--text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.tags {
+  list-style: none;
+  margin: auto 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.tags li {
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.project-links {
+  display: flex;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+}
+
+/* --------------------------------------------------------------------------
+   8. Footer
+   -------------------------------------------------------------------------- */
+
+.site-footer {
+  padding-block: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+.footer-note {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+/* --------------------------------------------------------------------------
+   9. Motion — colour transitions only, and none if the user asked for none
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
