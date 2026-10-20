@@ -1,419 +1,191 @@
-/* ==========================================================================
-   Monica Chen — portfolio
-   No frameworks, no webfonts, no external requests.
-   Mobile-first. Light by default, dark via [data-theme="dark"].
-   ========================================================================== */
-
-/* --------------------------------------------------------------------------
-   1. Design tokens (light)
-   -------------------------------------------------------------------------- */
-
+/* BostonHacks student guide. CSS-only transit artwork; no external assets. */
 :root {
   color-scheme: light;
-
-  --bg: #fbfaf8;
-  --surface: #ffffff;
-  --border: #e2ded6;
-  --text: #1a1a1a;
-  --text-muted: #56565a;
-  --accent: #1c5c86;
-  --badge-bg: #f2ede2;
-  --badge-text: #6a5320;
-  --focus: #1c5c86;
-
-  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
-    "Noto Sans", sans-serif;
-
-  /* Fluid type scale — no breakpoints needed for headings. */
-  --step-0: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
-  --step-1: clamp(1.125rem, 1.07rem + 0.28vw, 1.3125rem);
-  --step-2: clamp(1.5rem, 1.33rem + 0.85vw, 2rem);
-  --step-3: clamp(2.125rem, 1.68rem + 2.2vw, 3.5rem);
-
-  --space-1: 0.5rem;
-  --space-2: 1rem;
-  --space-3: 1.75rem;
-  --space-4: 3rem;
-
-  --radius: 10px;
-  --measure: 66ch;
+  --bg: #fff6e5;
+  --surface: #fffdf7;
+  --text: #202725;
+  --muted: #535b56;
+  --border: #b5b7a9;
+  --red: #b52d30;
+  --green: #17623f;
+  --blue: #205cad;
+  --orange: #a64a12;
+  --sign-bg: #202725;
+  --sign-text: #fff6e5;
+  --focus: #205cad;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
-/* Dark palette. Applied when JS sets the attribute. */
 [data-theme="dark"] {
   color-scheme: dark;
-
-  --bg: #111214;
-  --surface: #181a1d;
-  --border: #2b2e33;
-  --text: #ececed;
-  --text-muted: #a3a6ab;
-  --accent: #82bae2;
-  --badge-bg: #2b2417;
-  --badge-text: #e2cd92;
-  --focus: #82bae2;
+  --bg: #171e20;
+  --surface: #232d30;
+  --text: #fff4df;
+  --muted: #c4c9c1;
+  --border: #6b7a7c;
+  --red: #ff9191;
+  --green: #8ad7ab;
+  --blue: #9dc5ff;
+  --orange: #ffb875;
+  --sign-bg: #fff4df;
+  --sign-text: #171e20;
+  --focus: #9dc5ff;
 }
 
-/*
-  No-JS fallback: when JavaScript is unavailable no data-theme attribute is ever
-  set, so the system preference drives the palette. `:not([data-theme])` means this
-  never competes with the explicit attribute above.
-*/
+/* Respect the system palette when JavaScript is disabled. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
     color-scheme: dark;
-
-    --bg: #111214;
-    --surface: #181a1d;
-    --border: #2b2e33;
-    --text: #ececed;
-    --text-muted: #a3a6ab;
-    --accent: #82bae2;
-    --badge-bg: #2b2417;
-    --badge-text: #e2cd92;
-    --focus: #82bae2;
-  }
-
-  /* Keep the toggle icon consistent with the palette when JS is off. */
-  :root:not([data-theme]) .theme-toggle .icon-sun {
-    display: inline;
-  }
-
-  :root:not([data-theme]) .theme-toggle .icon-moon {
-    display: none;
+    --bg: #171e20;
+    --surface: #232d30;
+    --text: #fff4df;
+    --muted: #c4c9c1;
+    --border: #6b7a7c;
+    --red: #ff9191;
+    --green: #8ad7ab;
+    --blue: #9dc5ff;
+    --orange: #ffb875;
+    --sign-bg: #fff4df;
+    --sign-text: #171e20;
+    --focus: #9dc5ff;
   }
 }
 
-/* --------------------------------------------------------------------------
-   2. Base
-   -------------------------------------------------------------------------- */
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html {
-  -webkit-text-size-adjust: 100%;
-}
-
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
-  background-color: var(--bg);
+  background: var(--bg);
   color: var(--text);
-  font-family: var(--font-sans);
-  font-size: var(--step-0);
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
+  font: 1rem/1.7 var(--font);
+  overflow-wrap: anywhere;
 }
-
-.shell {
-  width: min(100% - 2.5rem, 62rem);
-  margin-inline: auto;
-}
-
-h1,
-h2,
-h3 {
-  line-height: 1.2;
-  margin: 0;
-  text-wrap: balance;
-}
-
-p {
-  margin: 0 0 var(--space-2);
-  max-width: var(--measure);
-}
-
-a {
-  color: var(--accent);
-  text-underline-offset: 0.2em;
-}
-
-a:hover {
-  text-decoration-thickness: 2px;
-}
-
-/* Visible keyboard focus everywhere. Never removed. */
-:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 3px;
-  border-radius: 3px;
-}
-
-/* --------------------------------------------------------------------------
-   3. Skip link — keyboard users land here first
-   -------------------------------------------------------------------------- */
-
+.shell { width: min(100% - 2rem, 70rem); margin-inline: auto; }
+h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
+p { margin: 0 0 1rem; max-width: 68ch; }
+a { color: var(--blue); text-underline-offset: 0.22em; }
+a:hover { text-decoration-thickness: 3px; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
 .skip-link {
   position: absolute;
-  top: 0;
-  left: var(--space-2);
+  inset: 0 auto auto 1rem;
   z-index: 10;
   transform: translateY(-150%);
-  padding: var(--space-1) var(--space-2);
-  background-color: var(--surface);
+  padding: 0.75rem 1rem;
+  background: var(--surface);
   color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  font-weight: 600;
-  text-decoration: none;
-  transition: transform 120ms ease-out;
+  border: 2px solid var(--text);
 }
+.skip-link:focus { transform: translateY(1rem); }
 
-.skip-link:focus {
-  transform: translateY(var(--space-2));
-}
-
-/* --------------------------------------------------------------------------
-   4. Header + theme toggle
-   -------------------------------------------------------------------------- */
-
-.site-header {
-  padding-block: var(--space-4) var(--space-3);
-  border-bottom: 1px solid var(--border);
-}
-
-.header-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
-}
-
-.header-intro h1 {
-  font-size: var(--step-3);
-  letter-spacing: -0.02em;
-}
-
-.tagline {
-  margin: var(--space-1) 0 0;
-  font-size: var(--step-1);
-  color: var(--text-muted);
-  max-width: none;
-}
-
+.site-header { border-bottom: 2px solid var(--text); padding-block: 1.25rem 0.75rem; }
+.header-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.75rem 1rem; }
 .theme-toggle {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-1);
-  min-height: 2.75rem; /* 44px — comfortable touch target */
-  max-width: 100%; /* never overflow the shell on narrow screens */
-  padding: var(--space-1) var(--space-2);
-  background-color: var(--surface);
+  gap: 0.65rem;
+  min-height: 2.75rem;
+  max-width: 100%;
+  padding: 0.6rem 0.9rem;
+  border: 2px solid var(--text);
+  border-radius: 999px;
+  background: var(--surface);
   color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
   font: inherit;
-  font-size: var(--step-0);
   text-align: left;
   cursor: pointer;
-  transition: border-color 120ms ease-out, background-color 120ms ease-out;
 }
+[data-theme-label] { min-width: 0; }
+.theme-toggle:hover { border-color: var(--blue); }
+.theme-dot { width: 0.8rem; height: 0.8rem; flex: none; border-radius: 50%; background: var(--blue); }
+.stop-nav { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; }
+.stop-nav a { display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 650; }
 
-/*
-  The label is a flex item, so it wraps at the word boundary instead of
-  overflowing once the button hits max-width. Wrapping only adds height, so the
-  44px touch target is never lost.
-*/
+.hero { padding-block: clamp(2.5rem, 7vw, 5rem); display: grid; gap: 2rem; align-items: center; }
+.hero-copy { min-width: 0; }
+.eyebrow { font-size: 0.8rem; font-weight: 750; letter-spacing: 0.09em; text-transform: uppercase; }
+h1 { font-size: clamp(2.1rem, 7vw, 5.2rem); letter-spacing: -0.055em; }
+.hero-tagline { margin-block: 1.25rem; font-size: clamp(1.6rem, 4vw, 2.8rem); line-height: 1.15; font-weight: 750; color: var(--green); }
 
-.theme-toggle:hover {
-  border-color: var(--accent);
+/* Abstract rail diagram, clipped only inside its own decorative container. */
+.route-map {
+  position: relative;
+  min-height: 16rem;
+  overflow: hidden;
+  border: 2px solid var(--text);
+  border-radius: 2rem 2rem 2rem 0;
+  background: var(--surface);
 }
-
-.theme-toggle .icon {
-  flex: none;
-  display: inline;
+.track { position: absolute; height: 0.7rem; width: 120%; left: -10%; background: var(--route); transform-origin: center; }
+.track::before, .track::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 0.35rem solid var(--route);
+  border-radius: 50%;
+  background: var(--surface);
+  transform: translateY(-50%);
 }
+.track::before { left: 25%; }
+.track::after { right: 25%; }
+.track-red { --route: var(--red); top: 24%; transform: rotate(-25deg); }
+.track-green { --route: var(--green); top: 42%; transform: rotate(25deg); }
+.track-blue { --route: var(--blue); top: 57%; transform: rotate(-25deg); }
+.track-orange { --route: var(--orange); top: 73%; transform: rotate(25deg); }
+.map-caption { position: absolute; bottom: 0; right: 0; padding: 0.4rem 0.8rem; background: var(--text); color: var(--bg); font-size: 0.75rem; font-weight: 750; letter-spacing: 0.06em; }
 
-/* Default (light): show the moon, since clicking switches to dark. */
-.theme-toggle .icon-sun {
-  display: none;
+.line-red { --route: var(--red); }
+.line-green { --route: var(--green); }
+.line-blue { --route: var(--blue); }
+.station { margin-bottom: 3rem; scroll-margin-top: 1rem; }
+.station-sign {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: var(--sign-bg);
+  color: var(--sign-text);
+  border-bottom: 0.5rem solid var(--route);
+  border-radius: 0.6rem 0.6rem 0 0;
+  font-size: clamp(1.3rem, 3vw, 2rem);
 }
+.stop-number { flex: none; font-size: 0.85rem; border: 2px solid currentColor; border-radius: 50%; width: 2rem; height: 2rem; display: grid; place-items: center; }
+.station-content { padding: 1.5rem 0 0 1rem; border-left: 0.4rem solid var(--route); }
+.section-intro { font-size: clamp(1.2rem, 2.5vw, 1.6rem); font-weight: 700; line-height: 1.35; }
+.cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; margin-top: 1.5rem; }
+.card { min-width: 0; padding: 1.25rem; background: var(--surface); border: 1px solid var(--border); border-radius: 0.6rem; }
+.card h3 { font-size: 1.2rem; margin-bottom: 0.75rem; }
+.card p:last-child { margin-bottom: 0; }
+.card .eyebrow { color: var(--red); margin-bottom: 0.75rem; }
+.steps { list-style: none; padding: 0; counter-reset: stops; }
+.steps .card { counter-increment: stops; }
+.steps .card::before { content: "STEP " counter(stops, decimal-leading-zero); display: block; margin-bottom: 0.75rem; color: var(--green); font-size: 0.8rem; font-weight: 750; letter-spacing: 0.08em; }
+.transfer-note { padding: 1.25rem; margin-top: 1.5rem; border: 2px dashed var(--orange); border-radius: 0.6rem; background: var(--surface); }
+.transfer-note strong { display: block; color: var(--orange); }
 
-[data-theme="dark"] .theme-toggle .icon-sun {
-  display: inline;
-}
-
-[data-theme="dark"] .theme-toggle .icon-moon {
-  display: none;
-}
-
-/* --------------------------------------------------------------------------
-   5. Sections
-   -------------------------------------------------------------------------- */
-
-.section {
-  padding-block: var(--space-4);
-}
-
-.section + .section {
-  border-top: 1px solid var(--border);
-}
-
-.section h2 {
-  font-size: var(--step-2);
-  letter-spacing: -0.01em;
-  margin-bottom: var(--space-3);
-}
-
-.notice {
-  padding: var(--space-2);
-  background-color: var(--badge-bg);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  font-size: var(--step-0);
-}
-
-/* --------------------------------------------------------------------------
-   6. About — fact list
-   -------------------------------------------------------------------------- */
-
-.facts {
-  margin: var(--space-3) 0 0;
-  display: grid;
-  gap: 0;
-  border-top: 1px solid var(--border);
-}
-
-.facts-row {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-1);
-  padding-block: var(--space-2);
-  border-bottom: 1px solid var(--border);
-}
-
-@media (min-width: 34rem) {
-  .facts-row {
-    grid-template-columns: 9rem 1fr;
-    gap: var(--space-3);
-  }
-}
-
-.facts dt {
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-.facts dd {
-  margin: 0;
-}
-
-/* --------------------------------------------------------------------------
-   7. Projects
-   -------------------------------------------------------------------------- */
-
-.project-list {
-  list-style: none;
-  margin: var(--space-3) 0 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-2);
-}
+/* Native details/summary retains keyboard behavior, including without JS. */
+.faq-list { display: grid; gap: 0.75rem; margin-top: 1.5rem; }
+details { border: 1px solid var(--border); border-radius: 0.6rem; background: var(--surface); }
+summary { min-height: 2.75rem; padding: 1rem; cursor: pointer; font-weight: 700; }
+summary::marker { color: var(--blue); }
+summary:hover { color: var(--blue); }
+details[open] summary { border-bottom: 1px solid var(--border); }
+.faq-answer { padding: 1rem; }
+.faq-answer p { margin: 0; }
+.site-footer { border-top: 0.5rem solid var(--orange); padding-block: 2rem; }
+.site-footer p { color: var(--muted); font-size: 0.9rem; }
+.site-footer .eyebrow { color: var(--text); }
 
 @media (min-width: 48rem) {
-  .project-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .hero { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
+  .route-map { min-height: 26rem; }
+  .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .station-content { padding-left: 1.75rem; }
 }
-
-.project-item {
-  display: flex;
-}
-
-.project-card {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: var(--space-3);
-  background-color: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-}
-
-.badge {
-  align-self: flex-start;
-  margin: 0 0 var(--space-2);
-  padding: 0.15rem 0.55rem;
-  background-color: var(--badge-bg);
-  color: var(--badge-text);
-  border-radius: 999px;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.project-title {
-  font-size: var(--step-1);
-  margin-bottom: var(--space-1);
-}
-
-.project-body {
-  color: var(--text-muted);
-  margin-bottom: var(--space-2);
-}
-
-.tags {
-  list-style: none;
-  margin: auto 0 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-1);
-}
-
-.tags li {
-  padding: 0.15rem 0.6rem;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  font-size: 0.8125rem;
-  color: var(--text-muted);
-}
-
-.project-links {
-  display: flex;
-  gap: var(--space-2);
-  margin: var(--space-2) 0 0;
-}
-
-/* --------------------------------------------------------------------------
-   8. Footer
-   -------------------------------------------------------------------------- */
-
-.site-footer {
-  padding-block: var(--space-3) var(--space-4);
-  border-top: 1px solid var(--border);
-}
-
-.footer-note {
-  margin: 0;
-  color: var(--text-muted);
-  font-size: 0.9375rem;
-}
-
-.footer-links {
-  display: flex;
-  gap: var(--space-2);
-  margin-bottom: var(--space-2);
-}
-
-/* --------------------------------------------------------------------------
-   9. Motion — colour transitions only, and none if the user asked for none
-   -------------------------------------------------------------------------- */
-
+/* No scroll animations or motion effects are used. */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+  html { scroll-behavior: auto; }
 }

@@ -1,5 +1,5 @@
 /*
- * Monica Chen — portfolio
+ * BostonHacks student class-project guide
  * All JavaScript for this site lives in this file.
  *
  * Single responsibility: the light/dark theme toggle, persisted to localStorage.
@@ -99,6 +99,9 @@
 
     // Sync the button to the theme already on <html>.
     applyTheme(currentTheme(), false);
+
+    // Without JavaScript the system palette still works; do not show a dead control.
+    toggle.hidden = false;
 
     toggle.addEventListener("click", function () {
       applyTheme(currentTheme() === DARK ? LIGHT : DARK, true);

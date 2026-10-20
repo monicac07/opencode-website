@@ -4,213 +4,136 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
-    <meta
-      name="description"
-      content="Monica Chen — data science student at Boston University. Coursework, projects, and contact information."
-    />
-    <title>Monica Chen | Data Science Student</title>
-
+    <meta name="description" content="An unofficial student guide to BostonHacks: learn about hackathons, prepare to participate, and explore beginner FAQs. A class project by Monica Chen." />
+    <title>BostonHacks | Student Guide · Class Project</title>
     <link rel="stylesheet" href="style.css" />
-
-    <!--
-      Loaded in <head> without `defer` on purpose. It is a local file, so blocking the
-      parse costs nothing, and running it before the body renders means the saved theme
-      is applied before first paint (no flash of the wrong theme).
-      All JavaScript for this site lives in this one file.
-    -->
+    <!-- Apply the saved theme early. All JavaScript lives in script.js. -->
     <script src="script.js"></script>
   </head>
-
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-header">
-      <div class="shell header-row">
-        <div class="header-intro">
-          <h1>Monica Chen</h1>
-          <!-- REPLACE: one line on who you are and what you are looking for next. -->
-          <p class="tagline">Data science student at Boston University.</p>
+      <div class="shell">
+        <div class="header-row">
+          <nav class="stop-nav" aria-label="Page sections">
+            <a href="#about">About</a>
+            <a href="#get-involved">Get involved</a>
+            <a href="#faq">FAQ</a>
+          </nav>
+          <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark theme" hidden>
+            <span class="theme-dot" aria-hidden="true"></span>
+            <span data-theme-label>Switch to dark theme</span>
+          </button>
         </div>
-
-        <button
-          id="theme-toggle"
-          class="theme-toggle"
-          type="button"
-          aria-pressed="false"
-          aria-label="Switch to dark theme"
-        >
-          <svg
-            class="icon icon-moon"
-            viewBox="0 0 24 24"
-            width="18"
-            height="18"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" fill="currentColor" />
-          </svg>
-          <svg
-            class="icon icon-sun"
-            viewBox="0 0 24 24"
-            width="18"
-            height="18"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <circle cx="12" cy="12" r="4.25" fill="currentColor" />
-            <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
-              <path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6" />
-            </g>
-          </svg>
-          <!-- Visible label. Kept identical to the button's aria-label in both states,
-               and kept in sync by script.js on every toggle. -->
-          <span data-theme-label>Switch to dark theme</span>
-        </button>
       </div>
     </header>
 
-    <main id="main" class="shell">
-      <section class="section" id="about" aria-labelledby="about-heading">
-        <h2 id="about-heading">About Me</h2>
+    <main id="main" tabindex="-1" class="shell">
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Your next stop: something you make.</p>
+          <h1>BostonHacks</h1>
+          <p class="hero-tagline">Big ideas.<br />First steps welcome.</p>
+          <p>A student guide to exploring hackathons, starting a project, and finding your way into BostonHacks. Curious but not sure where to begin? Start here.</p>
+        </div>
+        <!-- Decorative, not a real route map or event directions. -->
+        <div class="route-map" aria-hidden="true">
+          <span class="track track-red"></span>
+          <span class="track track-green"></span>
+          <span class="track track-blue"></span>
+          <span class="track track-orange"></span>
+          <span class="map-caption">IDEA → BUILD → SHARE</span>
+        </div>
+      </div>
 
-        <!--
-          REPLACE: 2–3 sentences. This is the first thing a recruiter reads, so lead with
-          what you study, one thing you are strong at, and what you are looking for next.
-        -->
-        <p>
-          I am a data science student at Boston University. This paragraph is placeholder
-          copy — replace it with your own background, focus areas, and goals.
-        </p>
-
-        <dl class="facts">
-          <div class="facts-row">
-            <dt>Program</dt>
-            <dd>Data Science, Boston University</dd>
+      <section class="station line-red" id="about" aria-labelledby="about-heading">
+        <h2 class="station-sign" id="about-heading"><span class="stop-number" aria-hidden="true">01</span>About BostonHacks</h2>
+        <div class="station-content">
+          <p class="section-intro">A place to turn “what if?” into a project.</p>
+          <p>BostonHacks brings students together to build technology projects during a hackathon. Instead of only reading about an idea, participants work on something they can try, explain, and share.</p>
+          <p>This guide is for students exploring that experience, including beginners. Think of it as a starting point, not an event handbook: the suggestions here are general hackathon guidance, not BostonHacks rules or promises.</p>
+          <div class="cards about-cards">
+            <article class="card">
+              <p class="eyebrow">Explore</p>
+              <h3>Follow a question</h3>
+              <p>Notice a small problem in your day. Could a tool, visualization, or prototype help you understand it differently?</p>
+            </article>
+            <article class="card">
+              <p class="eyebrow">Experiment</p>
+              <h3>Build a small first version</h3>
+              <p>A focused idea gives you room to learn. One useful feature is a better starting point than a long list you cannot finish.</p>
+            </article>
+            <article class="card">
+              <p class="eyebrow">Connect</p>
+              <h3>Learn with other people</h3>
+              <p>Explain your thinking, ask questions, and compare approaches. Sharing what did not work can be as useful as showing what did.</p>
+            </article>
           </div>
-          <div class="facts-row">
-            <dt>Graduating</dt>
-            <!-- REPLACE: your expected graduation year. -->
-            <dd>2027</dd>
-          </div>
-          <div class="facts-row">
-            <dt>Coursework</dt>
-            <!-- REPLACE: 4–6 relevant classes. -->
-            <dd>Statistics, Machine Learning, Databases</dd>
-          </div>
-          <div class="facts-row">
-            <dt>Tools</dt>
-            <!-- REPLACE: languages and libraries you actually use. -->
-            <dd>Python, pandas, scikit-learn, SQL, R</dd>
-          </div>
-        </dl>
+        </div>
       </section>
 
-      <section class="section" id="projects" aria-labelledby="projects-heading">
-        <h2 id="projects-heading">Projects</h2>
+      <section class="station line-green" id="get-involved" aria-labelledby="involved-heading">
+        <h2 class="station-sign" id="involved-heading"><span class="stop-number" aria-hidden="true">02</span>Get Involved</h2>
+        <div class="station-content">
+          <p class="section-intro">Pick a starting point. Take the next step.</p>
+          <p>These are general preparation suggestions, not BostonHacks participation requirements.</p>
+          <ol class="cards steps">
+            <li class="card">
+              <h3>Find your starting point</h3>
+              <p>Think about what draws you to a hackathon: learning a tool, exploring a problem, or collaborating on a small project. Pick one goal to guide your preparation.</p>
+            </li>
+            <li class="card">
+              <h3>Choose something to learn</h3>
+              <p>Try a small exercise with a tool that interests you. Bring a question or a rough idea; this guide does not assume you already have a polished project.</p>
+            </li>
+            <li class="card">
+              <h3>Think about collaboration</h3>
+              <p>Practice introducing your interests and what you want to learn. Ask classmates about their ideas and discuss how your skills could complement each other.</p>
+            </li>
+          </ol>
+          <aside class="transfer-note" aria-label="Official information reminder">
+            <strong>A guide, not an event handbook.</strong> This class project shares general preparation ideas. It does not accept registrations, confirm eligibility, or set event policies.
+          </aside>
+        </div>
+      </section>
 
-        <p class="notice" role="note">
-          <strong>Placeholder content.</strong> These three entries exist to hold the layout.
-          Each card is marked <em>Placeholder</em>. Replace the title, description, and tags,
-          and uncomment the link markup only once you have a real URL — no dead links ship.
-        </p>
-
-        <ul class="project-list" role="list">
-          <li class="project-item">
-            <article class="project-card">
-              <p class="badge">Placeholder</p>
-              <h3 class="project-title">
-                <!-- REPLACE: project name. -->
-                Project One
-              </h3>
-              <!--
-                REPLACE: what the project does and what you personally built.
-                Add an outcome only if it is a real, verifiable one — no invented
-                percentages, accuracy scores, or user counts.
-              -->
-              <p class="project-body">
-                Two sentences on the problem, your approach, and what the result was.
-              </p>
-              <ul class="tags" role="list" aria-label="Tools used in Project One">
-                <!-- REPLACE: 3–5 tags. -->
-                <li>Python</li>
-                <li>pandas</li>
-                <li>scikit-learn</li>
-              </ul>
-              <!--
-                REPLACE: uncomment and point at real URLs. Left commented out so the page
-                never renders a broken or invented link.
-              -->
-              <!--
-              <p class="project-links">
-                <a href="https://example.com/repo">Code</a>
-                <a href="https://example.com/live">Write-up</a>
-              </p>
-              -->
-            </article>
-          </li>
-
-          <li class="project-item">
-            <article class="project-card">
-              <p class="badge">Placeholder</p>
-              <h3 class="project-title">
-                <!-- REPLACE: project name. -->
-                Project Two
-              </h3>
-              <p class="project-body">
-                Two sentences on the problem, your approach, and what the result was.
-              </p>
-              <ul class="tags" role="list" aria-label="Tools used in Project Two">
-                <li>SQL</li>
-                <li>Flask</li>
-                <li>PostgreSQL</li>
-              </ul>
-              <!-- REPLACE: uncomment and point at real URLs. -->
-              <!--
-              <p class="project-links">
-                <a href="https://example.com/repo">Code</a>
-              </p>
-              -->
-            </article>
-          </li>
-
-          <li class="project-item">
-            <article class="project-card">
-              <p class="badge">Placeholder</p>
-              <h3 class="project-title">
-                <!-- REPLACE: project name. -->
-                Project Three
-              </h3>
-              <p class="project-body">
-                Two sentences on the problem, your approach, and what the result was.
-              </p>
-              <ul class="tags" role="list" aria-label="Tools used in Project Three">
-                <li>R</li>
-                <li>ggplot2</li>
-                <li>dplyr</li>
-              </ul>
-              <!-- REPLACE: uncomment and point at real URLs. -->
-              <!--
-              <p class="project-links">
-                <a href="https://example.com/notebook">Notebook</a>
-              </p>
-              -->
-            </article>
-          </li>
-        </ul>
+      <section class="station line-blue" id="faq" aria-labelledby="faq-heading">
+        <h2 class="station-sign" id="faq-heading"><span class="stop-number" aria-hidden="true">03</span>Frequently Asked Questions</h2>
+        <div class="station-content">
+          <p class="section-intro">New route? Good questions.</p>
+          <p>Open a question for general beginner guidance. Event-specific answers should always come from the organizers.</p>
+          <div class="faq-list">
+            <details>
+              <summary>What is a hackathon?</summary>
+              <div class="faq-answer"><p>A hackathon is a time-limited gathering for making projects, often with technology and collaboration at its center. The “hack” usually means creative building, not breaking into computer systems. Formats vary, so check the event’s own description.</p></div>
+            </details>
+            <details>
+              <summary>Do I need programming experience?</summary>
+              <div class="faq-answer"><p>You can start exploring project ideas before you feel expert. Research, design, explaining a problem, and testing a prototype can all support a project. This is general encouragement, not a statement about BostonHacks eligibility or available support.</p></div>
+            </details>
+            <details>
+              <summary>How can I find teammates?</summary>
+              <div class="faq-answer"><p>Start by sharing what you are interested in and what you hope to learn. Ask classmates about their ideas, and look for complementary interests rather than identical skills. This guide does not specify BostonHacks team rules or promise team-finding activities.</p></div>
+            </details>
+            <details>
+              <summary>How should I prepare?</summary>
+              <div class="faq-answer"><p>Practice opening and saving a small project with a tool you want to use. Write down a manageable idea and a few questions. Give yourself a chance to experiment before worrying about a polished result. This is general learning advice, not an event packing list.</p></div>
+            </details>
+            <details>
+              <summary>What is a manageable first project?</summary>
+              <div class="faq-answer"><p>Choose one small question and one thing to build around it. You might sketch an app screen, visualize a small dataset, or make a simple interactive page. These are practice ideas, not BostonHacks tracks or submission requirements.</p></div>
+            </details>
+          </div>
+        </div>
       </section>
     </main>
 
     <footer class="site-footer">
       <div class="shell">
-        <!--
-          REPLACE: contact links. Kept commented out so nothing invented ships on the page.
-          <p class="footer-links">
-            <a href="mailto:you@example.com">Email</a>
-            <a href="https://github.com/your-handle">GitHub</a>
-            <a href="https://linkedin.com/in/your-handle">LinkedIn</a>
-          </p>
-        -->
-        <p class="footer-note">© 2026 Monica Chen</p>
+        <p class="eyebrow">End of the guide. Start of your idea.</p>
+        <p><strong>Student class project by Monica Chen.</strong> An independent learning exercise, not affiliated with or endorsed by BostonHacks. Transit-inspired artwork is decorative, not travel directions.</p>
+        <p>Guide text and CSS artwork created for this assignment.</p>
       </div>
     </footer>
   </body>
