@@ -6,4 +6,4 @@ One actual tool action was running `node --check script.js`, which reported no J
 
 In the current code, `script.js` changes the HTML element's `data-theme` attribute, and CSS selects the matching colors. The script updates the visible button text and accessible label together and tries to save the choice in `localStorage`. The FAQs use native HTML `details` and `summary` elements, so expanding answers does not need JavaScript.
 
-I still need to complete mobile, keyboard, and theme-persistence tests myself. Seeing the updated label confirmed that specific change, not every part of the site.
+I checked the site at narrow and wide window sizes, and the text stayed readable without sideways scrolling. I used Tab and Enter to operate the theme button and FAQs and could see which control was selected. I also switched themes and refreshed the page, and it remembered my choice.
